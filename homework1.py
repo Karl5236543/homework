@@ -1,5 +1,6 @@
 import pprint
-
+#подучить слайсы
+#плдучить коллекции
 
 if __name__ == "__main__":
     #---------------------------------------------------------------------------#
@@ -8,8 +9,11 @@ if __name__ == "__main__":
     result_dict = {}
     for key in range(11):
         result_dict[key] = key * key
-    print(f'1:\t{result_dict}')
+    #print(f'1:\t{result_dict}')
 
+    #You may consider using dictionary comprehension here as well. Thus, it will look like: {i: i * i for i in keys}
+    result_dict = {key : key * key for key in range(11)}
+    print(f'1:\t{result_dict}')
     #---------------------------------------------------------------------------#
     # 2
     #---------------------------------------------------------------------------#
@@ -20,10 +24,10 @@ if __name__ == "__main__":
     # 3
     #---------------------------------------------------------------------------#
     old_string = 'произвольная строка'
-    vowels = ('а','о','у','ы','э','и')
+    vowels = ('а','о','у','ы','э','и','А','О','У','Э','И')
     result_string = old_string
     for ch in old_string:
-        if ch not in vowels:
+        if ch.isalpha() and ch not in vowels:
             result_string = result_string.replace(ch,'a')
     print(f'3:\t{old_string} --> {result_string}')
 
@@ -44,8 +48,10 @@ if __name__ == "__main__":
         max_num =  max(unique_numbers)
         unique_numbers.remove(max_num)
         max_numbers.append(max_num)
-    print(f'4.2:\t{max_numbers}')
+    #print(f'4.2:\t{max_numbers}')
 
+    #Your method works. Also, it is possible to sort the initial array and use slicing.
+    print(f'4.2:\t{sorted(list(set(numbers)))[:-4:-1]}')
     #---------------------------------------------------------------------------#
     # 4.3
     #---------------------------------------------------------------------------#
@@ -90,7 +96,7 @@ if __name__ == "__main__":
     unique_sities = set(cities)
     result = {}
     for city in unique_sities:
-        result[city] = [row for row in data if row['city'] == city]
+        result[city] = [ {key : row[key] for key in row if key != 'city'} for row in data if row['city'] == city]
     print('6.2:')
     pprint.pprint(result)
 
@@ -109,6 +115,10 @@ if __name__ == "__main__":
     
     list_var = 'В начале июля, в чрезвычайно жаркое время, под вечер, один молодой человек вышел из своей каморки, которую нанимал от жильцов в С — м переулке, на улицу и медленно, как бы в нерешимости, отправился к К — ну мосту.'.split()
     most_frequent_str = most_frequent(list_var)
+    #print(f'7:\nlist_var: {list_var}\nРезультат: {most_frequent_str}')
+
+    #7 it is possible to make it simpler:
+    most_frequent_str = max(set(list_var), key = list_var.count)
     print(f'7:\nlist_var: {list_var}\nРезультат: {most_frequent_str}')
     
     #---------------------------------------------------------------------------#
@@ -116,9 +126,10 @@ if __name__ == "__main__":
     #---------------------------------------------------------------------------#
     input_number = 123123010012
     number_str = str(input_number)
-    sum = 0
+    sum = 1
     for number in number_str:
-        sum += int(number)
+        if number != '0':
+            sum *= int(number)
     print(f'8:\t{input_number} --> {sum}')
 
     #---------------------------------------------------------------------------#
