@@ -6,14 +6,9 @@ if __name__ == "__main__":
     #---------------------------------------------------------------------------#
     # 1
     #---------------------------------------------------------------------------#
-    result_dict = {}
-    for key in range(11):
-        result_dict[key] = key * key
-    #print(f'1:\t{result_dict}')
-
-    #You may consider using dictionary comprehension here as well. Thus, it will look like: {i: i * i for i in keys}
     result_dict = {key : key * key for key in range(11)}
     print(f'1:\t{result_dict}')
+
     #---------------------------------------------------------------------------#
     # 2
     #---------------------------------------------------------------------------#
@@ -42,15 +37,6 @@ if __name__ == "__main__":
     # 4.2
     #---------------------------------------------------------------------------#
     numbers = [10, 11, 2, 3, 5, 8, 23, 11, 2, 5, 76, 2, 32, 76, 3, 10, 0, 1]
-    max_numbers = []
-    unique_numbers = set(numbers)
-    for _ in range(3):
-        max_num =  max(unique_numbers)
-        unique_numbers.remove(max_num)
-        max_numbers.append(max_num)
-    #print(f'4.2:\t{max_numbers}')
-
-    #Your method works. Also, it is possible to sort the initial array and use slicing.
     print(f'4.2:\t{sorted(list(set(numbers)))[:-4:-1]}')
     #---------------------------------------------------------------------------#
     # 4.3
@@ -71,7 +57,7 @@ if __name__ == "__main__":
     #---------------------------------------------------------------------------#
     dict_one = { 'a': 1, 'b': 2, 'c': 3, 'd': 4 }
     dict_two = { 'a': 6, 'b': 7, 'z': 20, 'x': 40 }
-    shared_keys = list(set(dict_one.keys()).intersection(set(dict_two.keys())))
+    shared_keys = list(dict_one.keys() & dict_two.keys())
     print(f'5:\t{shared_keys}')
 
     #---------------------------------------------------------------------------#
@@ -103,21 +89,7 @@ if __name__ == "__main__":
     #---------------------------------------------------------------------------#
     # 7
     #---------------------------------------------------------------------------#
-    def most_frequent(list_var):
-        str_counts = []
-        unique_str_list = list(set(list_var))
-        for string in unique_str_list:
-            str_counts.append({
-                    'string': string.lower(),
-                    'count': list_var.count(string.lower())
-                })
-        return sorted(str_counts, key = lambda el : el['count'])[-1]['string']
-    
     list_var = 'В начале июля, в чрезвычайно жаркое время, под вечер, один молодой человек вышел из своей каморки, которую нанимал от жильцов в С — м переулке, на улицу и медленно, как бы в нерешимости, отправился к К — ну мосту.'.split()
-    most_frequent_str = most_frequent(list_var)
-    #print(f'7:\nlist_var: {list_var}\nРезультат: {most_frequent_str}')
-
-    #7 it is possible to make it simpler:
     most_frequent_str = max(set(list_var), key = list_var.count)
     print(f'7:\nlist_var: {list_var}\nРезультат: {most_frequent_str}')
     
@@ -158,4 +130,3 @@ if __name__ == "__main__":
             is_three_words = True
             break
     print(f'10:\t{word_list} --> {is_three_words}')
-    
