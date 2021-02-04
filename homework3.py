@@ -23,9 +23,32 @@ def int_only(func):
     return inner
 
 
-@int_only
+def cached(func):
+    cache = {}
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        print(cache)
+        oll_args = tuple(kwargs.items()) + args
+        if oll_args in cache:
+            return cache[oll_args]
+        else:
+            cache[oll_args] = func(*args, **kwargs)
+            return cache[oll_args]
+    return inner
+
+
 @divided_by_one_hundred
-def sum(a, b):
+def sum1(a, b):
+    return a + b
+
+
+@int_only
+def sum2(a, b):
+    return a + b
+
+
+@cached
+def sum3(a, b):
     return a + b
 
 
@@ -34,15 +57,22 @@ if __name__ == '__main__':
     # 1
     #---------------------------------------------------#
     print("---------1----------")
-    sum(50, 50)
-    sum(50, 0)
+    sum1(50, 50)
+    sum1(50, 0)
 
     #---------------------------------------------------#
     # 2
     #---------------------------------------------------#
     print("---------2----------")
-    print(f'res = {sum(50, 50)}')
+    print(f'res = {sum2(50, 50)}')
     try:
-        sum("50", "0")
+        sum2("50", "0")
     except ValueError:
         print("поймано исключение ValueError")
+
+    #---------------------------------------------------#
+    # 2
+    #---------------------------------------------------#
+    print("---------3----------")
+    sum3(b = 10,a = 12)
+    sum3(10,12)
