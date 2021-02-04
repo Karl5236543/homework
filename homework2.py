@@ -4,7 +4,7 @@ import random
 def gameRSP(first_item):
     """ a function that emulates the game "rock, scissors, paper """
 
-    available_items = ['rock', 'scissors', 'paper']
+    available_items = ('rock', 'scissors', 'paper')
 
     if first_item not in available_items:
         raise ValueError(f"item must be in {available_items}")
