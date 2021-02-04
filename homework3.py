@@ -13,11 +13,11 @@ def divided_by_one_hundred(func):
     return inner
 
 
-def int_only(func):
+def not_str(func):
     @functools.wraps(func)
     def inner(*args, **kwargs):
-        if False in [isinstance(el, int) for el in args] or \
-            False in [isinstance(el, int) for el in kwargs.values()]:
+        if True in [isinstance(el, str) for el in args] or \
+            True in [isinstance(el, str) for el in kwargs.values()]:
             raise ValueError("string type is not supported")
         return func(*args, **kwargs)
     return inner
@@ -25,14 +25,19 @@ def int_only(func):
 
 def cached(func):
     cache = {}
+    used_cache_count = 0
     @functools.wraps(func)
     def inner(*args, **kwargs):
-        print(cache)
+        nonlocal used_cache_count
         oll_args = tuple(kwargs.items()) + args
         if oll_args in cache:
+            used_cache_count += 1
+            print(f'Used cache with counter = {used_cache_count}')
             return cache[oll_args]
         else:
             cache[oll_args] = func(*args, **kwargs)
+            print(f'Function executed with counter = {len(cache)}, '\
+                f'function result = {cache[oll_args]}')
             return cache[oll_args]
     return inner
 
@@ -42,7 +47,7 @@ def sum1(a, b):
     return a + b
 
 
-@int_only
+@not_str
 def sum2(a, b):
     return a + b
 
@@ -74,5 +79,9 @@ if __name__ == '__main__':
     # 2
     #---------------------------------------------------#
     print("---------3----------")
-    sum3(b = 10,a = 12)
-    sum3(10,12)
+    sum3(12,10)
+    sum3(1,3)
+    sum3(12,10)
+    sum3(12,10)
+    sum3(a=12,b=10)
+    sum3(a=12,b=10)
