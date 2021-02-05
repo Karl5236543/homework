@@ -16,8 +16,7 @@ def divided_by_one_hundred(func):
 def not_str(func):
     @functools.wraps(func)
     def inner(*args, **kwargs):
-        if True in [isinstance(el, str) for el in args] or \
-            True in [isinstance(el, str) for el in kwargs.values()]:
+        if True in [isinstance(el, str) for el in (args + tuple(kwargs.values()))]:
             raise ValueError("string type is not supported")
         return func(*args, **kwargs)
     return inner
@@ -29,16 +28,16 @@ def cached(func):
     @functools.wraps(func)
     def inner(*args, **kwargs):
         nonlocal used_cache_count
-        oll_args = tuple(kwargs.items()) + args
-        if oll_args in cache:
+        all_args = tuple(kwargs.items()) + args
+        if all_args in cache:
             used_cache_count += 1
             print(f'Used cache with counter = {used_cache_count}')
-            return cache[oll_args]
+            return cache[all_args]
         else:
-            cache[oll_args] = func(*args, **kwargs)
+            cache[all_args] = func(*args, **kwargs)
             print(f'Function executed with counter = {len(cache)}, '\
-                f'function result = {cache[oll_args]}')
-            return cache[oll_args]
+                f'function result = {cache[all_args]}')
+            return cache[all_args]
     return inner
 
 
