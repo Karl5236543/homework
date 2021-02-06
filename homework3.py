@@ -1,14 +1,14 @@
 import functools
 
 
-def divided_by_one_hundred(func):
+def divisor_of_one_hundred(func):
     @functools.wraps(func)
     def inner(*args, **kwargs):
         res = func(*args, **kwargs)
-        if res % 100 == 0:
+        if 100 % res == 0:
             print("We are OK!")
         else:
-            print(f"Bad news guys, we got {res % 100}")
+            print(f"Bad news guys, we got {100 % res}")
         return res
     return inner
 
@@ -41,7 +41,7 @@ def cached(func):
     return inner
 
 
-@divided_by_one_hundred
+@divisor_of_one_hundred
 def sum1(a, b):
     return a + b
 
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     #---------------------------------------------------#
     print("---------1----------")
     sum1(50, 50)
-    sum1(50, 0)
+    sum1(50, 100)
 
     #---------------------------------------------------#
     # 2
