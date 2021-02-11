@@ -58,7 +58,6 @@ if __name__ == '__main__':
     fibonachi_number(100)
     fibonachi_number(100)
     print(fibonachi_number.cache_info())
-
     fibonachi_number.cache_clear()
     fibonachi_number(100)
     print(fibonachi_number.cache_info())
