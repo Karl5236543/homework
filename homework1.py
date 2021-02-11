@@ -1,4 +1,5 @@
 import pprint
+import functools
 #подучить слайсы
 #плдучить коллекции
 
@@ -20,10 +21,8 @@ if __name__ == "__main__":
     #---------------------------------------------------------------------------#
     old_string = 'произвольная строка'
     vowels = ('а','о','у','ы','э','и','А','О','У','Э','И')
-    result_string = old_string
-    for ch in old_string:
-        if ch.isalpha() and ch not in vowels:
-            result_string = result_string.replace(ch,'a')
+
+    result_string = "".join([letter if letter in vowels else 'a' for letter in old_string])
     print(f'3:\t{old_string} --> {result_string}')
 
     #---------------------------------------------------------------------------#
@@ -37,7 +36,7 @@ if __name__ == "__main__":
     # 4.2
     #---------------------------------------------------------------------------#
     numbers = [10, 11, 2, 3, 5, 8, 23, 11, 2, 5, 76, 2, 32, 76, 3, 10, 0, 1]
-    print(f'4.2:\t{sorted(list(set(numbers)))[:-4:-1]}')
+    print(f'4.2:\t{sorted(list(set(numbers)))[::-1][:3]}')
     #---------------------------------------------------------------------------#
     # 4.3
     #---------------------------------------------------------------------------#
@@ -90,18 +89,14 @@ if __name__ == "__main__":
     # 7
     #---------------------------------------------------------------------------#
     list_var = 'В начале июля, в чрезвычайно жаркое время, под вечер, один молодой человек вышел из своей каморки, которую нанимал от жильцов в С — м переулке, на улицу и медленно, как бы в нерешимости, отправился к К — ну мосту.'.split()
-    most_frequent_str = max(set(list_var), key = list_var.count)
+    most_frequent_str = max(set(list_var), key=list_var.count)
     print(f'7:\nlist_var: {list_var}\nРезультат: {most_frequent_str}')
     
     #---------------------------------------------------------------------------#
     # 8
     #---------------------------------------------------------------------------#
     input_number = 123123010012
-    number_str = str(input_number)
-    sum = 1
-    for number in number_str:
-        if number != '0':
-            sum *= int(number)
+    sum = functools.reduce(lambda first_num, second_num : int(first_num) + int(second_num), str(input_number))
     print(f'8:\t{input_number} --> {sum}')
 
     #---------------------------------------------------------------------------#
