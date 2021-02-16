@@ -12,10 +12,10 @@
 import csv
 from datetime import *
 
-if __name__ == '__main__':
-    #----------------------------------------------------------------------------------#
-    # 1
-    #----------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------#
+# 1
+#----------------------------------------------------------------------------------#
+def task1():
     new_lines = []
     with open(r'.\homework5_data\1.txt', 'r', encoding='utf-8') as f:
         for line in f:
@@ -30,9 +30,11 @@ if __name__ == '__main__':
     with open(r'.\homework5_data\1.txt', 'w', encoding='utf-8') as f:
         f.writelines(new_lines)
 
-    #----------------------------------------------------------------------------------#
-    # 2
-    #----------------------------------------------------------------------------------#
+
+#----------------------------------------------------------------------------------#
+# 2
+#----------------------------------------------------------------------------------#
+def task2():
     file_path = r'.\homework5_data\2_input.txt'
     required_phones = []
 
@@ -42,6 +44,8 @@ if __name__ == '__main__':
     with open(r'.\homework5_data\2_output.txt', 'w', encoding='utf-8') as f:
         f.writelines(required_phones)
 
+
+def task3():
     #----------------------------------------------------------------------------------#
     # 3
     #----------------------------------------------------------------------------------#
@@ -49,16 +53,18 @@ if __name__ == '__main__':
     new_lines = []
 
     with open(file_path, 'r', encoding='utf-8') as f:
-        current_lines = [string for string in f]
+        current_lines = list(f)
         max_len = len(max(current_lines, key=len))
         new_lines = [string.rjust(max_len, ' ') for string in current_lines]
 
     with open(file_path, 'w', encoding='utf-8') as f:
         f.writelines(new_lines)
-    
-    #----------------------------------------------------------------------------------#
-    # 4
-    #----------------------------------------------------------------------------------#
+
+
+#----------------------------------------------------------------------------------#
+# 4
+#----------------------------------------------------------------------------------#
+def task4():
     input_file_path = r'.\homework5_data\4_input.csv'
     output_file_path = r'.\homework5_data\4_output.txt'
     output_data = []
@@ -85,4 +91,12 @@ if __name__ == '__main__':
         
         with open(output_file_path, 'w', encoding='utf-8') as f:
             f.writelines(output_data)
+
+
+if __name__ == '__main__':
+    task1()
+    task2()
+    task3()
+    task4()
+    
             
