@@ -50,16 +50,11 @@ def task3():
     # 3
     #----------------------------------------------------------------------------------#
     file_path = r'.\homework5_data\3.txt'
-    new_lines = []
 
-    with open(file_path, 'r', encoding='utf-8') as f:
-        current_lines = list(f)
-        max_len = len(max(current_lines, key=len))
-        new_lines = [string.rjust(max_len, ' ') for string in current_lines]
-
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.writelines(new_lines)
-
+    with open(file_path, 'r+', encoding='utf-8') as f:
+        max_len = len(max(f, key=len))
+        print(max_len)
+        f.writelines(f.write().rjust(max_len, ' '))
 
 #----------------------------------------------------------------------------------#
 # 4
