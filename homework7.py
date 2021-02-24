@@ -7,23 +7,26 @@ class cd:
     def __init__(self, path, suppress_exc=None):
         if not os.path.exists(path):
             raise ValueError("директория не найдена")
-        self._suppress_exc = suppress_exc
+        self._suppress_exc = suppress_exc or Exception
         self._path = path
         self._current_dir = os.getcwd()
 
     def __enter__(self):
-        os.chdir(self._path)
+        try:
+            os.chdir(self._path)
+            raise IndexError()
+        except self._suppress_exc:
+            pass
+            
     
     def __exit__(self, exc_type, exc_value, tb):
         os.chdir(self._current_dir)
-        if self._suppress_exc:
-            return exc_type is not None and issubclass(exc_type, self._suppress_exc)
 
 
 @contextlib.contextmanager
 def cd_decorator(path, suppress_exc=None):
     if not os.path.exists(path):
-            raise ValueError("директория не найдена")
+        raise ValueError("директория не найдена")
     current_dir = os.getcwd()
     os.chdir(path)
     try:
@@ -67,10 +70,8 @@ if __name__ == '__main__':
 
     print('------------------1-------------------')
     print(f'current dir: {os.getcwd()}')
-    with cd(other_path, FileNotFoundError):
+    with cd(other_path, IndexError):
         print(f'current dir: {os.getcwd()}')
-        with open('dawdawddawdfa') as f:
-            pass
     print(f'current dir: {os.getcwd()}')
 
     print('------------------2-------------------')
