@@ -27,13 +27,12 @@ class cd:
 def cd_decorator(path, suppress_exc=None):
     if not os.path.exists(path):
         raise ValueError("директория не найдена")
+    suppress_exc = suppress_exc or Exception
     current_dir = os.getcwd()
     os.chdir(path)
     try:
         yield
-    except:
-        exc_type = sys.exc_info()[0]
-        if not (suppress_exc and issubclass(exc_type, suppress_exc)):
+    except suppress_exc:
             raise
     finally:
         os.chdir(current_dir)
