@@ -5,9 +5,9 @@ import time
 
 class cd:
     def __init__(self, path, suppress_exc=None):
-        self._suppress_exc = suppress_exc
         if not os.path.exists(path):
             raise ValueError("директория не найдена")
+        self._suppress_exc = suppress_exc
         self._path = path
         self._current_dir = os.getcwd()
 
@@ -22,6 +22,8 @@ class cd:
 
 @contextlib.contextmanager
 def cd_decorator(path, suppress_exc=None):
+    if not os.path.exists(path):
+            raise ValueError("директория не найдена")
     current_dir = os.getcwd()
     os.chdir(path)
     try:
@@ -65,9 +67,10 @@ if __name__ == '__main__':
 
     print('------------------1-------------------')
     print(f'current dir: {os.getcwd()}')
-    with cd(other_path, IndexError):
+    with cd(other_path, FileNotFoundError):
         print(f'current dir: {os.getcwd()}')
-        [][0]
+        with open('dawdawddawdfa') as f:
+            pass
     print(f'current dir: {os.getcwd()}')
 
     print('------------------2-------------------')
