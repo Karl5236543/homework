@@ -7,6 +7,7 @@ class cd:
     def __init__(self, path, suppress_exc=None):
         if not os.path.exists(path):
             raise ValueError("директория не найдена")
+        self._is_suppress = True if suppress_exc else False
         self._suppress_exc = suppress_exc or Exception
         self._path = path
         self._current_dir = os.getcwd()
@@ -16,8 +17,8 @@ class cd:
             os.chdir(self._path)
             raise IndexError()
         except self._suppress_exc:
-            pass
-            
+            if not self._is_suppress:
+                raise
     
     def __exit__(self, exc_type, exc_value, tb):
         os.chdir(self._current_dir)
@@ -27,13 +28,19 @@ class cd:
 def cd_decorator(path, suppress_exc=None):
     if not os.path.exists(path):
         raise ValueError("директория не найдена")
+    is_suppress = True if suppress_exc else False
     suppress_exc = suppress_exc or Exception
     current_dir = os.getcwd()
-    os.chdir(path)
+    try:
+        os.chdir(path)
+        raise IndexError()
+    except suppress_exc:
+        if not is_suppress:
+            raise
     try:
         yield
-    except suppress_exc:
-            raise
+    except Exception:
+        pass
     finally:
         os.chdir(current_dir)
 
