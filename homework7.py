@@ -40,7 +40,7 @@ def cd_decorator(path, suppress_exc=None):
     try:
         yield
     except Exception:
-        pass
+        raise
     finally:
         os.chdir(current_dir)
 
