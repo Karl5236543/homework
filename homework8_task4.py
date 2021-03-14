@@ -86,7 +86,7 @@ class Product:
 
 class Basket:
     def __init__(self, items=None):
-        self._items = items or ()
+        self._items = items or []
 
     def get_items(self):
         return self._items
@@ -100,7 +100,7 @@ class Basket:
             products = [item[0] for item in self._items]
             if new_product not in products:
                 if new_product.quantity >= product_count:    
-                    self._items.append((new_product, product_count))
+                    self._items.append([new_product, product_count])
             else:
                 item_index = self._items.index(new_product)
                 current_product_count = self._items[item_index][1]
